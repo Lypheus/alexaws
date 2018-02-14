@@ -1,0 +1,47 @@
+service: kudosee
+provider:
+  name: aws
+  runtime: nodejs6.10
+  stage: dev
+  environment:
+    DYNAMODB_TABLE: ${self:service}-${self:provider.stage}
+functions:
+  moods-get:
+    handler: moods/get.handler
+    events:
+      - http:
+          path: kudosee/moods/{id}
+          method: get
+          cors: true
+  moods-post:
+    handler: moods/post.handler
+    events:
+      - http:
+          path: kudosee/moods
+          method: post
+          cors: true
+  kudos-post:
+    handler: kudos/post.handler
+    events:
+      - http:
+          path: kudosee/kudos
+          method: post
+          cors: true
+  kudos-get:
+    handler: kudos/get.handler
+    events:
+      - http:
+          path: kudosee/kudos
+          method: get
+          cors: true
+      - http:
+          path: kudosee/kudos/{id}
+          method: get
+          cors: true
+  kudos-delete:
+    handler: kudos/delete.handler
+    events:
+      - http:
+          path: kudosee/kudos/{id}
+          method: delete
+          cors: true        
